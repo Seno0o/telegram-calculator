@@ -3,27 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram Style Calculator</title>
+  <title>Scientific Calculator</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
       margin: 0;
       padding: 0;
-      background-color: #e5e5e5;
+      background-color: #1e1e1e;
+      color: #ffffff;
     }
     .calculator {
-      width: 320px;
+      width: 400px;
       margin: 50px auto;
       padding: 20px;
-      background-color: #ffffff;
+      background-color: #2a2a2a;
       border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 0.5s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
     .screen {
       width: 100%;
@@ -31,14 +27,15 @@
       font-size: 28px;
       text-align: right;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
+      border: none;
       padding: 10px;
       border-radius: 8px;
-      background-color: #f0f0f0;
+      background-color: #3a3a3a;
+      color: #ffffff;
       transition: background-color 0.3s;
     }
     .screen:focus {
-      background-color: #fff;
+      background-color: #4a4a4a;
       outline: none;
     }
     .buttons {
@@ -47,17 +44,17 @@
       gap: 10px;
     }
     button {
-      font-size: 22px;
+      font-size: 20px;
       padding: 20px;
       border: none;
-      background-color: #0088cc;
+      background-color: #007acc;
       color: white;
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s, transform 0.1s;
     }
     button:hover {
-      background-color: #007bb5;
+      background-color: #005fa3;
     }
     button:active {
       transform: scale(0.95);
@@ -90,6 +87,11 @@
       <button class="clear" onclick="clearScreen()">C</button>
       <button onclick="calculate()">=</button>
       <button onclick="operate('+')">+</button>
+      <button onclick="append('Math.sin(')">sin</button>
+      <button onclick="append('Math.cos(')">cos</button>
+      <button onclick="append('Math.tan(')">tan</button>
+      <button onclick="append('Math.log(')">log</button>
+      <button onclick="append('Math.sqrt(')">√</button>
     </div>
   </div>
   <script>
@@ -108,7 +110,7 @@
     }
 
     function isOperator(char) {
-      return ['+', '-', '*', '/'].includes(char.trim());
+      return ['+', '-', '*', '/', '(', ')'].includes(char.trim());
     }
 
     function calculate() {
