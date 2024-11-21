@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Bot Page</title>
+    <title>Telegram Bot Mini App</title>
     <style>
         body {
             display: flex;
@@ -11,33 +11,56 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
+            background-color: #f8e6b5;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
         }
-        .animated {
-            animation: fadeIn 1s forwards;
+        h1 {
+            color: #d9534f;
+            animation: bounce 1s infinite;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
-        input, button {
-            padding: 10px;
-            margin: 5px;
+        input, button, select {
+            padding: 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        input:focus, button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        button {
+            background-color: #d9534f;
+            color: white;
+            cursor: pointer;
+        }
+        button:active {
+            transform: scale(0.95);
         }
         #link, #time {
             width: 300px;
         }
         #message {
             margin-top: 20px;
-            font-size: 1.5em;
+            font-size: 1.2em;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="animated">
-        <h1>Telegram Bot Link and Timer</h1>
-        <input type="text" id="link" placeholder="Enter your link">
+    <div>
+        <h1>Link & Timer Mini App</h1>
+        <input type="text" id="link" placeholder="Enter your link" required>
         <select id="time">
             <option value="30">30 seconds</option>
             <option value="60">60 seconds</option>
@@ -46,7 +69,7 @@
             <option value="custom">Custom</option>
         </select>
         <input type="number" id="customTime" placeholder="Enter custom time in seconds" style="display:none;">
-        <button onclick="startTimer()">Start</button>
+        <button onclick="startTimer()">Start Timer</button>
         <div id="message"></div>
     </div>
 
@@ -55,11 +78,7 @@
         const customTimeInput = document.getElementById('customTime');
 
         timeSelect.addEventListener('change', function() {
-            if (this.value === 'custom') {
-                customTimeInput.style.display = 'block';
-            } else {
-                customTimeInput.style.display = 'none';
-            }
+            customTimeInput.style.display = this.value === 'custom' ? 'block' : 'none';
         });
 
         function startTimer() {
@@ -70,7 +89,7 @@
                 return;
             }
 
-            document.getElementById('message').innerHTML = `Link: ${link} <br> Timer set for ${time} seconds.`;
+            document.getElementById('message').innerHTML = `Link: <strong>${link}</strong><br>Timer set for <strong>${time} seconds</strong>.`;
             setTimeout(() => {
                 alert(`Time's up! You can now visit the link: ${link}`);
             }, time * 1000);
