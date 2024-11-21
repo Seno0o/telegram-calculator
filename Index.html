@@ -3,33 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram Calculator</title>
+  <title>Telegram Style Calculator</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #e5e5e5;
     }
     .calculator {
-      width: 300px;
+      width: 320px;
       margin: 50px auto;
       padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .screen {
       width: 100%;
-      height: 50px;
-      font-size: 24px;
+      height: 60px;
+      font-size: 28px;
       text-align: right;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      padding: 5px;
-      border-radius: 5px;
-      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f0f0f0;
+      transition: background-color 0.3s;
+    }
+    .screen:focus {
+      background-color: #fff;
+      outline: none;
     }
     .buttons {
       display: grid;
@@ -37,19 +47,23 @@
       gap: 10px;
     }
     button {
-      font-size: 18px;
-      padding: 15px;
+      font-size: 22px;
+      padding: 20px;
       border: none;
-      background-color: #007BFF;
+      background-color: #0088cc;
       color: white;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s, transform 0.1s;
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: #007bb5;
+    }
+    button:active {
+      transform: scale(0.95);
     }
     button.clear {
-      background-color: #FF4D4D;
+      background-color: #ff4d4d;
     }
     button.clear:hover {
       background-color: #cc0000;
@@ -87,13 +101,19 @@
     }
 
     function operate(operator) {
-      expression += ` ${operator} `;
-      document.getElementById("screen").value = expression;
+      if (expression.length > 0 && !isOperator(expression[expression.length - 1])) {
+        expression += ` ${operator} `;
+        document.getElementById("screen").value = expression;
+      }
+    }
+
+    function isOperator(char) {
+      return ['+', '-', '*', '/'].includes(char.trim());
     }
 
     function calculate() {
       try {
-        const result = eval(expression);
+        const result = eval(expression.replace(/\s+/g, ''));
         document.getElementById("screen").value = result;
         expression = result.toString();
       } catch {
